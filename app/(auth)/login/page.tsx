@@ -1,26 +1,38 @@
 "use client";
 
 import { API_URL } from "@/constants";
-import { Button, Input } from "@heroui/react";
+import { Button, Input, Spinner } from "@heroui/react";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 export default function LoginPage() {
+  const [submitting, setSubmitting] = useState(false);
+  const router = useRouter();
+
   const handleSubmit = async (e: React.FormEvent) => {
+    setSubmitting(true);
     e.preventDefault();
     const formData = new FormData(e.target);
     const authData: any = {};
     authData.userEmail = formData.get("userEmail");
     authData.userPassword = formData.get("userPassword");
-    const { data } = await axios.post(
-      `${API_URL}/auth/login`,
-      {
-        ...authData,
-      },
-      {
-        withCredentials: true,
-      },
-    );
+
+    try {
+      const response = await axios.post(
+        `${API_URL}/auth/login`,
+        {
+          ...authData,
+        },
+        {
+          withCredentials: true,
+        },
+      );
+      if (response.status === 201) router.push("/dashboard");
+    } catch (e) {
+      setSubmitting(false);
+    }
 
     return;
   };
@@ -48,7 +60,9 @@ export default function LoginPage() {
           />
         </div>
         <div className="flex flex-col items-center gap-2">
-          <Button>Iniciar Sesión</Button>
+          <Button type="submit" isDisabled={submitting}>
+            {submitting ? "Enviando..." : "Iniciar Sesión"}
+          </Button>
           <p>
             ¿No tienes cuenta?{" "}
             <Link href="/signup" className="font-bold underline">
