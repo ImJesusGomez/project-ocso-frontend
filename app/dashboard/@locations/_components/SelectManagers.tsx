@@ -6,9 +6,11 @@ import { Location, Manager } from "../../../../entities";
 export default function SelectManager({
   managers,
   locations,
+  defaultManager,
 }: {
   managers: Manager[];
   locations: Location[];
+  defaultManager: string;
 }) {
   const disabledKeys = locations
     .map((location: Location) => {
@@ -17,7 +19,12 @@ export default function SelectManager({
     .filter((managerId) => managerId !== undefined);
 
   return (
-    <Select aria-label="Manager" name="manager" disabledKeys={disabledKeys}>
+    <Select
+      defaultValue={defaultManager}
+      aria-label="Manager"
+      name="manager"
+      disabledKeys={disabledKeys}
+    >
       {managers.map((manager: Manager) => (
         <option key={manager.managerId} value={manager.managerId}>
           {manager.managerFullName}
