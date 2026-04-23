@@ -1,29 +1,34 @@
 import { createLocation } from "@/actions/locations/create";
-import { API_URL, TOKEN_NAME } from "@/constants";
+import { API_URL } from "@/constants";
 import { Input } from "@heroui/react";
-import axios from "axios";
-import { cookies } from "next/headers";
 import SelectManager from "./SelectManagers";
-import DeleteLocation from "@/actions/detele";
+import { AuthHeaders } from "../../../../helpers/authHeaders";
+import { Location, Manager } from "@/entities";
 
 export default async function FormNewLocation(store: { store: string | string[] | undefined }) {
   if (store) return null;
 
-  const cookieStore = await cookies();
-  const token = cookieStore.get(TOKEN_NAME)?.value;
-
-  const responseManagers = await axios.get(`${API_URL}/managers`, {
+  const responseManagers = await fetch(`${API_URL}/managers`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      ...AuthHeaders(),
+    },
+    next: {
+      tags: ["dashboard:managers", "dashboard:locations:managers"],
     },
   });
 
-  const responseLocation = await axios.get(`${API_URL}/locations`, {
+  const dataManagers: Manager[] = await responseManagers.json();
+
+  const responseLocation = await fetch(`${API_URL}/locations`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      ...AuthHeaders(),
+    },
+    next: {
+      tags: ["dashboard:locations"],
     },
   });
 
+  const dataLocation: Location[] = await responseLocation.json();
   return (
     <form
       action={createLocation}
@@ -34,7 +39,7 @@ export default async function FormNewLocation(store: { store: string | string[] 
       <Input aria-label="Dirección" name="locationAddress" />
       <Input aria-label="Latitud" name="locationLat" />
       <Input aria-label="Longitud" name="locationLng" />
-      <SelectManager managers={responseManagers.data} locations={responseLocation.data} />
+      <SelectManager managers={dataManagers} locations={dataLocation} />
       <button type="submit" color="primary">
         Subir
       </button>

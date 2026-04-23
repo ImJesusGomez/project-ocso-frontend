@@ -1,15 +1,12 @@
 "use server";
 
-import { API_URL, TOKEN_NAME } from "@/constants";
-import axios from "axios";
-import { cookies } from "next/headers";
+import { API_URL } from "@/constants";
+import { AuthHeaders } from "../../helpers/authHeaders";
+import { revalidateTag } from "next/cache";
 
 export async function createLocation(formData: FormData) {
   const location: Record<string, any> = {};
   const locationLatLng: [number, number] = [0, 0];
-  const token = await cookies.get(TOKEN_NAME).value;
-
-  if (!token) return null;
 
   for (const key of formData.keys()) {
     const value = formData.get(key);
@@ -27,15 +24,13 @@ export async function createLocation(formData: FormData) {
 
   location.locationLatLng = locationLatLng;
 
-  axios.post(
-    `${API_URL}/locations`,
-    {
-      ...location,
+  const response = await fetch(`${API_URL}/locations`, {
+    method: "POST",
+    body: JSON.stringify(location),
+    headers: {
+      ...AuthHeaders(),
     },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  );
+  });
+
+  if (response.status === 201) revalidateTag("dashboard:locations");
 }

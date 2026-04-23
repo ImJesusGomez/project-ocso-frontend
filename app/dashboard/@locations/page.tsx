@@ -1,7 +1,5 @@
-import { API_URL, TOKEN_NAME } from "@/constants";
+import { API_URL } from "@/constants";
 import { Location } from "@/entities";
-import axios from "axios";
-import { cookies } from "next/headers";
 import SelectLocation from "./_components/SelectLocation";
 import LocationCard from "./_components/LocationCard";
 import FormNewLocation from "./_components/FormNewLocationt";
@@ -13,11 +11,16 @@ const LocationPage = async ({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  let { data } = await axios.get<Location[]>(`${API_URL}/locations`, {
+  const response = await fetch(`${API_URL}/locations`, {
     headers: {
       ...AuthHeaders(),
     },
+    next: {
+      tags: ["dashboard:locations"],
+    },
   });
+
+  let data: Location[] = await response.json();
 
   data = [
     ...data,
