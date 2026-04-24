@@ -1,7 +1,5 @@
-import React from "react";
-
-export const ManagersPage = () => {
-  return <div>page</div>;
+export const ManagersPage = async () => {
+  return null;
 };
 
 export default ManagersPage;
