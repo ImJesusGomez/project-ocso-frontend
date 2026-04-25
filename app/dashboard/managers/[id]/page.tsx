@@ -1,7 +1,7 @@
 import { API_URL } from "@/constants";
 import { AuthHeaders } from "../../../../helpers/authHeaders";
-import { Card, CardContent, CardHeader } from "@heroui/react";
 import { Manager } from "@/entities";
+import ManagerCard from "./ManagerCard";
 
 export default async function ManagerPage({
   params,
@@ -21,12 +21,8 @@ export default async function ManagerPage({
 
   const data: Manager = await response.json();
   return (
-    <Card>
-      <CardHeader>{data.managerFullName}</CardHeader>
-      <CardContent>
-        <p>{data.managerEmail}</p>
-        <p>{data.managerPhoneNumber}</p>
-      </CardContent>
-    </Card>
+    <div>
+      <ManagerCard manager={data} />
+    </div>
   );
 }
