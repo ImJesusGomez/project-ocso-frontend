@@ -9,6 +9,7 @@ export default function ManagerCard({ manager }: { manager: Manager }) {
         <CardContent>
           <p>{manager.managerEmail}</p>
           <p>{manager.managerPhoneNumber}</p>
+          <p>${manager.managerSalary}</p>
         </CardContent>
       </Card>
     </>
