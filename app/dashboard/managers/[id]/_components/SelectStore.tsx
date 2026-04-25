@@ -15,7 +15,7 @@ export default function SelectStore({
     .filter((id): id is string => id !== undefined);
 
   return (
-    <Select disabledKeys={disabledStores}>
+    <Select name="location" disabledKeys={disabledStores}>
       {store.map((s: Location) => (
         <option key={String(s.locationId)}>{s.locationName}</option>
       ))}
