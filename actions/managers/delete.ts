@@ -5,12 +5,12 @@ import { AuthHeaders } from "@/helpers/authHeaders";
 import { revalidateTag } from "next/cache";
 
 export default async function deleteManager(managerId: string) {
-  const response = fetch(`${API_URL}/managers/${managerId}`, {
+  const response = await fetch(`${API_URL}/managers/${managerId}`, {
     method: "DELETE",
     headers: {
       ...AuthHeaders(),
     },
   });
 
-  revalidateTag("dashboard:managers", "");
+  if (response.status === 200) revalidateTag("dashboard:managers", "");
 }
