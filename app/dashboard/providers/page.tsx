@@ -13,6 +13,9 @@ const ProvidersPage = async () => {
     headers: {
       ...AuthHeaders(),
     },
+    next: {
+      tags: ["dashboard:providers"],
+    },
   });
 
   const providers: Provider[] = await response.json();

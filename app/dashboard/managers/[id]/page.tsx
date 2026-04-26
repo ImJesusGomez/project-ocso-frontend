@@ -3,8 +3,8 @@ import { AuthHeaders } from "../../../../helpers/authHeaders";
 import { Manager } from "@/entities";
 import ManagerCard from "./_components/ManagerCard";
 import DeleteManagerButton from "./_components/DeleteManagerButton";
-import FormUpdateManager from "./FormUpdateManager";
 import UpdateManager from "./_components/UpdateManager";
+import FormUpdateManager from "./_components/FormUpdateManager";
 
 export default async function ManagerPage({
   params,
