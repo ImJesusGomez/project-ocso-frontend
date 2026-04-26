@@ -3,7 +3,7 @@
 import { Button, Modal, ModalBody, ModalContainer, ModalHeader } from "@heroui/react";
 import { ReactNode, useState } from "react";
 
-export default function CreateProvider({ children }: { children: ReactNode }) {
+export default function DeleteProvider({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
@@ -16,7 +16,10 @@ export default function CreateProvider({ children }: { children: ReactNode }) {
             <>
               <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
 
-              <ModalBody>{children}</ModalBody>
+              <ModalBody>
+                {children}
+                <Button>Cancelar</Button>
+              </ModalBody>
             </>
           )}
         </ModalContainer>
