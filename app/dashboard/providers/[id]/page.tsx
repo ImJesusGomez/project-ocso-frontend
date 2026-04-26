@@ -4,6 +4,7 @@ import ProviderCard from "../_components/ProviderCard";
 import { Product, Provider } from "@/entities";
 import ProductCard from "./_components/ProductCard";
 import Link from "next/link";
+import FormUpdateProvider from "./_components/FormUpdateProvider";
 
 export default async function ProviderPafe({
   params,
@@ -17,11 +18,17 @@ export default async function ProviderPafe({
       headers: {
         ...AuthHeaders(),
       },
+      next: {
+        tags: [`dashboard:providers:${params.id}`],
+      },
     })
   ).json();
   return (
     <div className="flex flex-col px-10 gap-10 h-[90vh] pt-10">
-      <ProviderCard provider={provider} />
+      <div className="flex flex-wrap gap-10">
+        <ProviderCard provider={provider} />
+        <FormUpdateProvider provider={provider} />
+      </div>
       <div className="h-1 bg-black w-[90vw]" />
       <div className="flex flex-wrap gap-10">
         {provider.products.map((product: Product) => (
