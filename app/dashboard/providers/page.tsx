@@ -5,6 +5,8 @@ import ProviderCard from "./_components/ProviderCard";
 import Link from "next/link";
 import { Button } from "@heroui/react";
 import { LuPlus } from "react-icons/lu";
+import CreateProvider from "./_components/CreateProvider";
+import FormCreateProvider from "./_components/FormCreateProvider";
 
 const ProvidersPage = async () => {
   const response = await fetch(`${API_URL}/providers`, {
@@ -18,9 +20,9 @@ const ProvidersPage = async () => {
   return (
     <>
       <div className="flex grow-0 flex-col justify-end w-full px-10 h-[90vh]">
-        <Button>
-          <LuPlus />
-        </Button>
+        <CreateProvider>
+          <FormCreateProvider />
+        </CreateProvider>
       </div>
       <div className="w-full flexm flex-row flex-wrap px-10">
         {providers.map((provider: Provider) => (
