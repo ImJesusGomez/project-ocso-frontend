@@ -1,3 +1,3 @@
-export default function Default() {
-  return null;
+export default function defaultPage() {
+  return "Not Found";
 }

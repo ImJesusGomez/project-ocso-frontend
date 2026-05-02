@@ -3,7 +3,7 @@ import { Button, Card, CardContent, CardFooter, CardHeader, Link } from "@heroui
 
 export default function EmployeeCard({ employee }: { employee: Employee }) {
   return (
-    <Card className="max-h-72 size-72">
+    <Card className="max-h-72 size-72 min-h-72">
       <CardHeader>
         <h1 className="font-bold text-xl">
           {employee.employeeName + " " + employee.employeeLastName}
