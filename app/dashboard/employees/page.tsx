@@ -1,7 +1,10 @@
 import { API_URL } from "@/constants";
-import { Employee } from "@/entities";
+import { Employee, Location } from "@/entities";
 import { AuthHeaders } from "@/helpers/authHeaders";
 import EmployeeCard from "./_components/EmployeeCard";
+import CreateEmployee from "./_components/CreateEmployee";
+import FormCreateEmployee from "./_components/FormCreateEmployee";
+import ListEmployees from "./_components/ListEmployees";
 
 const EmployeesPage = async () => {
   const response = await fetch(`${API_URL}/employees`, {
@@ -12,15 +15,22 @@ const EmployeesPage = async () => {
 
   const employees: Employee[] = await response.json();
 
+  const responseLocation = await fetch(`${API_URL}/locations`, {
+    headers: {
+      ...AuthHeaders(),
+    },
+  });
+
+  const locations: Location[] = await responseLocation.json();
+
   return (
     <div className="flex flex-wrap grow-0 h-[90vh] gap-4 overflow-y-auto p-10">
-      {employees.map((employee: Employee) => {
-        if (employee.employeePhoto !== null) {
-          return <EmployeeCard key={employee.employeeId} employee={employee} />;
-        } else {
-          return <EmployeeCard key={employee.employeeId} employee={employee} />;
-        }
-      })}
+      <div className="absolute bottom-10 right-10">
+        <ListEmployees employees={employees} location={locations} />
+        <CreateEmployee store={""}>
+          <FormCreateEmployee />
+        </CreateEmployee>
+      </div>
     </div>
   );
 };
