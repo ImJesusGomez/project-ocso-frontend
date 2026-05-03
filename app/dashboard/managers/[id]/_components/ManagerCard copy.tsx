@@ -3,8 +3,6 @@ import { Manager } from "@/entities";
 import { Card, CardHeader, CardContent } from "@heroui/react";
 import FormUpdateUser from "./FormUpdateUser";
 
-import FormCreateUserManager from "./FromCreaterUser";
-
 export default function ManagerCard({ manager }: { manager: Manager }) {
   return (
     <>
@@ -17,7 +15,7 @@ export default function ManagerCard({ manager }: { manager: Manager }) {
             </ModalGeneric>
           ) : (
             <ModalGeneric store={undefined}>
-              <FormCreateUserManager managerId={manager.managerId} />
+              <FormUpdateUser user={manager.user} />
             </ModalGeneric>
           )}
         </CardHeader>

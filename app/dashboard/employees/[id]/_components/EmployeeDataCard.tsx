@@ -1,6 +1,8 @@
 import { Employee } from "@/entities";
 import Image from "next/image";
 import Link from "next/link";
+import CreateUser from "./CreateUser";
+import FormCreateUserEmployee from "./FromCreaterUser";
 
 export default function EmployeeDataCard({ employee }: { employee: Employee }) {
   return (
@@ -18,6 +20,9 @@ export default function EmployeeDataCard({ employee }: { employee: Employee }) {
       </div>
       <div className="h-full py-20 w-1 bg-zinc-300 mx-6" />
       <Image src={employee.employeePhoto!} className="object-cover" alt="" />
+      <CreateUser store={undefined}>
+        <FormCreateUserEmployee employeeId={employee.employeeId} />
+      </CreateUser>
     </div>
   );
 }

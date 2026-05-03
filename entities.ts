@@ -26,6 +26,7 @@ export interface Manager {
   managerEmail: string;
   managerPhoneNumber: string;
   location: Location;
+  user: User;
 }
 
 export interface Provider {
@@ -42,4 +43,13 @@ export interface Product {
   price: number;
   countSeal: number;
   provider: Provider;
+}
+
+export interface User {
+  userId: string;
+  userEmail: string;
+  userPassword: string;
+  userRoles: string[];
+  manager: Manager;
+  employee: Employee;
 }
